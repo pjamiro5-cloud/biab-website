@@ -45,9 +45,8 @@
   border-color: var(--color-line);
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/* Scroll smoothing is handled by Lenis (see components/SmoothScroll.tsx) —
+   native scroll-behavior: smooth would fight it on anchor jumps. */
 
 body {
   background: var(--color-paper);
@@ -170,9 +169,6 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
