@@ -16,42 +16,56 @@ import {
 export default function Home() {
   return (
     <>
-      {/* Hero */}
-      <section className="overflow-x-clip">
-        <Container className="py-20 md:py-28 lg:py-32">
-          <div className="max-w-2xl">
-            <h1 className="font-display text-[56px] font-bold leading-[0.98] tracking-tight md:text-[84px] lg:text-[92px]">
-              Build something of <span className="text-blue">your own.</span>
-            </h1>
-            <p className="mt-8 max-w-md text-lg leading-relaxed text-mid md:text-xl">
-              BIAB gives you the system, tools and support to start and build
-              a real business.
-            </p>
-            <p className="mt-6 max-w-md text-base font-semibold leading-relaxed">
-              Choose a business. Get your setup. Start building.
-            </p>
+      {/* Hero — tall scroll stage so the box can pack itself as the user scrolls */}
+      <section
+        className="relative overflow-x-clip"
+        data-biab-scroll-stage
+        style={{ minHeight: "calc(100vh + 650px)" }}
+      >
+        <div className="sticky top-16 md:top-20">
+          <div className="mx-auto max-w-[1600px] px-6 py-12 md:px-10 md:py-16 lg:flex lg:items-start lg:gap-12 xl:gap-20">
+            <div className="lg:w-[420px] lg:shrink-0 xl:w-[460px]">
+              <h1 className="font-display text-[56px] font-bold leading-[0.98] tracking-tight md:text-[84px] lg:text-[64px] xl:text-[76px]">
+                Build something of <span className="text-blue">your own.</span>
+              </h1>
+              <p className="mt-8 max-w-md text-lg leading-relaxed text-mid md:text-xl lg:text-base xl:text-lg">
+                BIAB gives you the system, tools and support to start and
+                build a real business.
+              </p>
+              <p className="mt-6 max-w-md text-base font-semibold leading-relaxed">
+                Choose a business. Get your setup. Start building.
+              </p>
 
-            <ul className="mt-6 space-y-1.5 text-sm font-semibold text-mid">
-              <li>No endless research.</li>
-              <li>No overpriced coaching.</li>
-              <li>No figuring everything out alone.</li>
-            </ul>
+              <ul className="mt-6 space-y-1.5 text-sm font-semibold text-mid">
+                <li>No endless research.</li>
+                <li>No overpriced coaching.</li>
+                <li>No figuring everything out alone.</li>
+              </ul>
 
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <Button href="/pricing">Explore BIAB</Button>
-              <Button href="/how-it-works" variant="secondary">
-                See how it works
-              </Button>
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row lg:flex-col xl:flex-row">
+                <Button href="/pricing">Explore BIAB</Button>
+                <Button href="/how-it-works" variant="secondary">
+                  See how it works
+                </Button>
+              </div>
+              <p className="mt-6 text-sm text-mid">
+                Built for people who are ready to do the work.
+              </p>
             </div>
-            <p className="mt-6 text-sm text-mid">
-              Built for people who are ready to do the work.
-            </p>
-          </div>
 
-          <Reveal className="mt-16 min-w-0 md:mt-20">
-            <BIABSystem />
-          </Reveal>
-        </Container>
+            <div className="mt-16 min-w-0 lg:mt-0 lg:flex-1">
+              <Reveal>
+                <BIABSystem />
+              </Reveal>
+              <p className="mt-6 text-center text-xs font-semibold uppercase tracking-widest text-mid">
+                Scroll to pack your box{" "}
+                <span className="text-blue" aria-hidden="true">
+                  ↓
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
       <Container>

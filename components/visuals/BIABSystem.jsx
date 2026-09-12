@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useId, useState } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
 import "./biab-system.css";
 
 export const defaultModules = [
@@ -23,11 +23,65 @@ function Icon({ type, ...props }) {
 }
 
 /** Standalone, container-responsive component. All values are illustrative and editable. */
-export default function BIABSystem({ modules = defaultModules, clientName = 'Alex Morgan', clientValue = 'CHF 2’400', brand = 'BIAB', logoSrc = '/biab-wordmark.png', showDetails = false, className = '', onModuleChange = () => {} }) {
+export default function BIABSystem({ modules = defaultModules, clientName = 'Alex Morgan', clientValue = 'CHF 2’400', brand = 'BIAB', logoSrc = '/biab-wordmark.png', showDetails = false, scrollAnimation = true, scrollDistance = 600, className = '', onModuleChange = () => {} }) {
   const [selected, setSelected] = useState(modules[0]?.id);
   const uid = useId();
+  const sceneRef = useRef(null);
+  useEffect(() => {
+    const scene = sceneRef.current;
+    if (!scene || !scrollAnimation) return;
+    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const cards = Array.from(scene.querySelectorAll('.biab-module'));
+    const box = scene.querySelector('.biab-box');
+    const anchor = scene.closest('[data-biab-scroll-stage]') || scene;
+    let frame = 0;
+    let start = 0;
+    let height = 0;
+    const render = () => {
+      frame = 0;
+      const progress = media.matches ? 0 : Math.max(0, Math.min(1, (window.scrollY - start) / Math.max(1, scrollDistance)));
+      cards.forEach((card, i) => {
+        // The front card enters first; the remaining cards follow into the opening.
+        const delay = (cards.length - 1 - i) * 0.045;
+        const t = Math.max(0, Math.min(1, (progress - delay) / (1 - delay)));
+        const eased = t * t * (3 - 2 * t);
+        const travel = Math.max(0, .70 - i * .1248) * height;
+        card.style.setProperty('--pack-y', `${eased * travel}px`);
+        card.style.setProperty('--pack-scale', `${1 - eased * .07}`);
+        card.style.opacity = `${1 - Math.max(0, (t - .88) / .12)}`;
+        card.style.pointerEvents = t > .88 ? 'none' : '';
+        card.inert = t > .88;
+      });
+    };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(render); };
+    const measure = () => {
+      start = anchor.getBoundingClientRect().top + window.scrollY;
+      height = box.getBoundingClientRect().height;
+      schedule();
+    };
+    const observer = new ResizeObserver(measure);
+    observer.observe(box);
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', measure);
+    media.addEventListener('change', schedule);
+    measure();
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', measure);
+      media.removeEventListener('change', schedule);
+      cards.forEach(card => {
+        card.style.removeProperty('--pack-y');
+        card.style.removeProperty('--pack-scale');
+        card.style.opacity = '';
+        card.style.pointerEvents = '';
+        card.inert = false;
+      });
+    };
+  }, [scrollAnimation, scrollDistance, modules]);
   const active = modules.find(m => m.id === selected) || modules[0];
-  return <section className={`biab-system ${className}`} aria-label="The BIAB business system">
+  return <section ref={sceneRef} className={`biab-system ${className}`} aria-label="The BIAB business system">
     <div className="biab-scene">
       <div className="biab-note" aria-hidden="true">Everything you need.<br/><span>In one place.</span><svg viewBox="0 0 80 60"><path d="M6 4C4 34 34 43 65 43m-10-8 12 8-13 8"/></svg></div>
       <div className="biab-box">

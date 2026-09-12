@@ -24,3 +24,8 @@
 .biab-logo-crop{display:block;position:relative;width:78%;aspect-ratio:2303/973;overflow:hidden}
 .biab-box-logo{position:absolute;max-width:none;width:277.9%;height:auto;left:-89.75%;top:-41.93%}
 @container(max-width:600px){.biab-note{top:0;left:4%;font-size:10px;line-height:1.35;transform:none}.biab-note svg{display:none}}
+
+/* Scroll-driven card movement; no timed transition, so reversal is immediate. */
+.biab-module{transform:translateY(var(--pack-y,0px)) rotate(7deg) scale(var(--pack-scale,1));transition:border-color 160ms}
+@media(hover:hover) and (pointer:fine){.biab-module:hover{transform:translateY(var(--pack-y,0px)) rotate(7deg) scale(var(--pack-scale,1))}}
+.biab-module:active{transform:translateY(var(--pack-y,0px)) rotate(7deg) scale(var(--pack-scale,1))}
