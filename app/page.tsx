@@ -18,9 +18,9 @@ export default function Home() {
     <>
       {/* Hero */}
       <section className="overflow-x-clip">
-        <Container className="grid grid-cols-1 gap-12 py-20 md:grid-cols-[1fr_1.1fr] md:items-center md:gap-8 md:py-28 lg:py-32">
-          <div>
-            <h1 className="max-w-xl font-display text-[56px] font-bold leading-[0.98] tracking-tight md:text-[84px] lg:text-[92px]">
+        <Container className="py-20 md:py-28 lg:py-32">
+          <div className="max-w-2xl">
+            <h1 className="font-display text-[56px] font-bold leading-[0.98] tracking-tight md:text-[84px] lg:text-[92px]">
               Build something of <span className="text-blue">your own.</span>
             </h1>
             <p className="mt-8 max-w-md text-lg leading-relaxed text-mid md:text-xl">
@@ -48,7 +48,7 @@ export default function Home() {
             </p>
           </div>
 
-          <Reveal className="min-w-0">
+          <Reveal className="mt-16 min-w-0 md:mt-20">
             <BIABSystem />
           </Reveal>
         </Container>
