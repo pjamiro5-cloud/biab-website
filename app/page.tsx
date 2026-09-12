@@ -1,8 +1,8 @@
 import Link from "next/link";
-import Image from "next/image";
 import Container from "@/components/Container";
 import Button from "@/components/Button";
 import Reveal from "@/components/Reveal";
+import BiabSystemCard from "@/components/visuals/BiabSystemCard";
 import ProcessFlow from "@/components/visuals/ProcessFlow";
 import ProductDashboard from "@/components/visuals/ProductDashboard";
 import ChaosVsClean from "@/components/visuals/ChaosVsClean";
@@ -48,15 +48,8 @@ export default function Home() {
             </p>
           </div>
 
-          <Reveal className="min-w-0 md:-mr-14 lg:-mr-24 min-[1440px]:-mr-32">
-            <Image
-              src="/biab-box-illustration.png"
-              alt="The BIAB box containing Leads, CRM, Sales Scripts, Templates and Support — flowing from opportunity to client."
-              width={3498}
-              height={1798}
-              priority
-              className="mx-auto h-auto w-full max-w-[600px] md:mx-0 md:ml-auto md:max-w-[760px] lg:max-w-[840px] xl:max-w-[940px] min-[1440px]:max-w-[1040px]"
-            />
+          <Reveal className="mx-auto min-w-0 md:mx-0 md:ml-auto">
+            <BiabSystemCard />
           </Reveal>
         </Container>
       </section>
