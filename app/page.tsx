@@ -1,8 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import Container from "@/components/Container";
 import Button from "@/components/Button";
 import Reveal from "@/components/Reveal";
-import SystemFlow from "@/components/visuals/SystemFlow";
 import ProcessFlow from "@/components/visuals/ProcessFlow";
 import ProductDashboard from "@/components/visuals/ProductDashboard";
 import ChaosVsClean from "@/components/visuals/ChaosVsClean";
@@ -17,10 +17,10 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section>
-        <Container className="grid grid-cols-1 gap-12 py-24 md:grid-cols-[1.3fr_1fr] md:items-center md:gap-10 md:py-32">
+      <section className="overflow-x-clip">
+        <Container className="grid grid-cols-1 gap-12 py-20 md:grid-cols-[1fr_1.1fr] md:items-center md:gap-8 md:py-28 lg:py-32">
           <div>
-            <h1 className="max-w-xl font-display text-[56px] font-bold leading-[0.98] tracking-tight md:text-[92px]">
+            <h1 className="max-w-xl font-display text-[56px] font-bold leading-[0.98] tracking-tight md:text-[84px] lg:text-[92px]">
               Build something of <span className="text-blue">your own.</span>
             </h1>
             <p className="mt-8 max-w-md text-lg leading-relaxed text-mid md:text-xl">
@@ -48,8 +48,15 @@ export default function Home() {
             </p>
           </div>
 
-          <Reveal>
-            <SystemFlow />
+          <Reveal className="min-w-0 md:-mr-10 lg:-mr-16 min-[1440px]:-mr-24">
+            <Image
+              src="/biab-box-illustration.png"
+              alt="The BIAB box containing Leads, CRM, Sales Scripts, Templates and Support — flowing from opportunity to client."
+              width={3498}
+              height={1798}
+              priority
+              className="mx-auto h-auto w-full max-w-[520px] md:mx-0 md:ml-auto md:max-w-[640px] lg:max-w-[680px] xl:max-w-[760px] min-[1440px]:max-w-[820px]"
+            />
           </Reveal>
         </Container>
       </section>
