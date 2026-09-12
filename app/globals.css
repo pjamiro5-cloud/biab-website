@@ -1,0 +1,73 @@
+@import "tailwindcss";
+
+:root {
+  --color-ink: #0a0a0a;
+  --color-paper: #ffffff;
+  --color-mid: #6b6b6b;
+  --color-line: #e5e5e5;
+  --color-charcoal: #3a3a3a;
+  --color-tint: #f7f7f6;
+}
+
+@theme inline {
+  --color-ink: var(--color-ink);
+  --color-paper: var(--color-paper);
+  --color-mid: var(--color-mid);
+  --color-line: var(--color-line);
+  --color-charcoal: var(--color-charcoal);
+  --color-tint: var(--color-tint);
+  --font-display: var(--font-space-grotesk);
+  --font-logo: var(--font-oswald);
+  --font-sans: var(--font-inter);
+}
+
+* {
+  border-color: var(--color-line);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+/* Section divider: a thin hairline with a short heavy tab at the start —
+   reads as an intentional mark rather than a default <hr>. */
+.divider {
+  position: relative;
+  height: 1px;
+  background: var(--color-line);
+}
+
+.divider::before {
+  content: "";
+  position: absolute;
+  top: -1.5px;
+  left: 0;
+  width: 56px;
+  height: 4px;
+  background: var(--color-ink);
+}
+
+.divider-invert::before {
+  background: var(--color-paper);
+}
+
+.divider-invert {
+  background: var(--color-charcoal);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
