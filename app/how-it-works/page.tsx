@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Container from "@/components/Container";
 import Button from "@/components/Button";
+import Reveal from "@/components/Reveal";
 import { HOW_IT_WORKS } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -25,26 +26,32 @@ export default function HowItWorksPage() {
       </Container>
 
       <section>
-        <Container>
+        <Container className="relative">
+          <div className="absolute left-[3px] top-16 bottom-16 hidden w-px bg-blue-line md:block" />
           {HOW_IT_WORKS.map((item, i) => (
-            <div
-              key={item.step}
-              className={`grid grid-cols-1 gap-6 py-14 md:grid-cols-[160px_1fr] md:gap-16 md:py-20 ${
-                i !== HOW_IT_WORKS.length - 1 ? "border-b border-line" : ""
-              }`}
-            >
-              <span className="font-display text-7xl font-bold tracking-tight text-mid md:text-8xl">
-                {item.step}
-              </span>
-              <div className="max-w-2xl">
-                <h2 className="font-display text-3xl font-bold tracking-tight md:text-4xl">
-                  {item.title}
-                </h2>
-                <p className="mt-4 text-base leading-relaxed text-mid md:text-lg">
-                  {item.description}
-                </p>
+            <Reveal key={item.step} delay={i * 100}>
+              <div
+                className={`grid grid-cols-1 gap-6 py-14 md:grid-cols-[160px_1fr] md:gap-16 md:py-20 ${
+                  i !== HOW_IT_WORKS.length - 1 ? "border-b border-line" : ""
+                }`}
+              >
+                <span className="relative font-display text-7xl font-bold tracking-tight text-mid md:text-8xl">
+                  <span
+                    className="absolute -left-1.5 top-4 hidden h-2 w-2 rounded-full bg-blue md:block"
+                    aria-hidden="true"
+                  />
+                  {item.step}
+                </span>
+                <div className="max-w-2xl">
+                  <h2 className="font-display text-3xl font-bold tracking-tight md:text-4xl">
+                    {item.title}
+                  </h2>
+                  <p className="mt-4 text-base leading-relaxed text-mid md:text-lg">
+                    {item.description}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </Container>
       </section>

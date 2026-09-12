@@ -1,6 +1,12 @@
 import Link from "next/link";
 import Container from "@/components/Container";
 import Button from "@/components/Button";
+import Reveal from "@/components/Reveal";
+import SystemFlow from "@/components/visuals/SystemFlow";
+import ProcessFlow from "@/components/visuals/ProcessFlow";
+import ProductDashboard from "@/components/visuals/ProductDashboard";
+import ChaosVsClean from "@/components/visuals/ChaosVsClean";
+import BoxCategories from "@/components/visuals/BoxCategories";
 import {
   HOW_IT_WORKS,
   WHAT_YOU_GET,
@@ -15,7 +21,7 @@ export default function Home() {
         <Container className="grid grid-cols-1 gap-12 py-24 md:grid-cols-[1.3fr_1fr] md:items-center md:gap-10 md:py-32">
           <div>
             <h1 className="max-w-xl font-display text-[56px] font-bold leading-[0.98] tracking-tight md:text-[92px]">
-              Build something of your own.
+              Build something of <span className="text-blue">your own.</span>
             </h1>
             <p className="mt-8 max-w-md text-lg leading-relaxed text-mid md:text-xl">
               BIAB gives you the system, tools and support to start and build
@@ -24,28 +30,27 @@ export default function Home() {
             <p className="mt-6 max-w-md text-base font-semibold leading-relaxed">
               Choose a business. Get your setup. Start building.
             </p>
+
+            <ul className="mt-6 space-y-1.5 text-sm font-semibold text-mid">
+              <li>No endless research.</li>
+              <li>No overpriced coaching.</li>
+              <li>No figuring everything out alone.</li>
+            </ul>
+
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
               <Button href="/pricing">Explore BIAB</Button>
               <Button href="/how-it-works" variant="secondary">
                 See how it works
               </Button>
             </div>
+            <p className="mt-6 text-sm text-mid">
+              Built for people who are ready to do the work.
+            </p>
           </div>
 
-          <div className="flex flex-col justify-center gap-3 border-l border-ink py-2 pl-8 md:py-6">
-            <span className="font-display text-xl font-bold tracking-tight md:text-2xl">
-              No endless research.
-            </span>
-            <span className="font-display text-xl font-bold tracking-tight md:text-2xl">
-              No overpriced coaching.
-            </span>
-            <span className="font-display text-xl font-bold tracking-tight md:text-2xl">
-              No figuring everything out alone.
-            </span>
-            <span className="mt-4 text-sm text-mid">
-              Built for people who are ready to do the work.
-            </span>
-          </div>
+          <Reveal>
+            <SystemFlow />
+          </Reveal>
         </Container>
       </section>
 
@@ -132,21 +137,7 @@ export default function Home() {
             </Link>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 gap-px bg-line sm:grid-cols-2 lg:grid-cols-4">
-            {HOW_IT_WORKS.map((item) => (
-              <div key={item.step} className="bg-paper p-8">
-                <span className="font-display text-base font-bold text-mid">
-                  {item.step}
-                </span>
-                <h3 className="mt-4 font-display text-2xl font-bold tracking-tight">
-                  {item.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-mid">
-                  {item.description}
-                </p>
-              </div>
-            ))}
-          </div>
+          <ProcessFlow steps={HOW_IT_WORKS} />
         </Container>
       </section>
 
@@ -155,7 +146,7 @@ export default function Home() {
       </Container>
 
       {/* Section 5 — What you actually get */}
-      <section>
+      <section className="bg-blue-tint">
         <Container className="py-24 md:py-32">
           <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_1.4fr] md:gap-16">
             <h2 className="font-display text-4xl font-bold leading-[1.05] tracking-tight md:text-5xl">
@@ -170,17 +161,8 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 gap-px bg-line sm:grid-cols-2 lg:grid-cols-3">
-            {WHAT_YOU_GET.map((item) => (
-              <div key={item.title} className="bg-paper p-8">
-                <h3 className="font-display text-xl font-bold tracking-tight">
-                  {item.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-mid">
-                  {item.description}
-                </p>
-              </div>
-            ))}
+          <div className="mt-12">
+            <ProductDashboard items={WHAT_YOU_GET} />
           </div>
 
           <div className="mt-12 border-t border-ink pt-8">
@@ -219,30 +201,32 @@ export default function Home() {
               pieces together so you can focus on execution.
             </p>
           </div>
+          <div className="md:col-span-2">
+            <ChaosVsClean />
+          </div>
         </Container>
       </section>
 
-      {/* Section 7 — Fair chance */}
-      <section>
-        <Container className="grid grid-cols-1 gap-10 py-24 md:grid-cols-[1fr_1.4fr] md:gap-16 md:py-32">
-          <h2 className="font-display text-3xl font-bold leading-[1.05] tracking-tight md:text-4xl">
-            A fair chance to build something real.
+      {/* Section 7 — Fair chance (brand moment) */}
+      <section className="bg-ink text-paper">
+        <Container className="py-28 md:py-40">
+          <p className="text-xs font-semibold uppercase tracking-widest text-blue">
+            No network. No big budget. No experience.
+          </p>
+          <h2 className="mt-6 max-w-2xl font-display text-5xl font-bold leading-[1] tracking-tight md:text-7xl">
+            Still a <span className="text-blue">fair chance.</span>
           </h2>
-          <div className="space-y-5 text-base leading-relaxed text-mid md:text-lg">
+          <div className="mt-10 max-w-xl space-y-4 text-base leading-relaxed text-white/60 md:text-lg">
             <p>
-              Starting a business shouldn&rsquo;t require thousands of
-              francs, the right network or years of experience.
-            </p>
-            <p>
-              We believe people who are willing to work should have access
-              to the infrastructure they need to compete.
+              We believe people who are willing to work should have access to
+              the infrastructure they need to compete.
             </p>
             <p>
               BIAB doesn&rsquo;t promise success. It doesn&rsquo;t promise
               you&rsquo;ll become rich. And it won&rsquo;t build the business
               for you.
             </p>
-            <p className="font-semibold text-ink">
+            <p className="font-semibold text-paper">
               What we can give you is a better starting position. What you do
               with it is up to you.
             </p>
@@ -307,7 +291,7 @@ export default function Home() {
       </Container>
 
       {/* Section 10 — The Boxes */}
-      <section className="bg-tint">
+      <section className="bg-blue-tint">
         <Container className="py-24 md:py-32">
           <div className="grid grid-cols-1 gap-10 md:grid-cols-[1fr_1.4fr] md:gap-16">
             <h2 className="font-display text-4xl font-bold leading-[1.05] tracking-tight md:text-5xl">
@@ -338,16 +322,20 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-16 border border-ink bg-paper p-8 md:p-10">
-            <span className="text-xs font-semibold uppercase tracking-widest text-mid">
-              Example — Website Box
-            </span>
-            <p className="mt-4 max-w-2xl text-lg leading-relaxed">
-              {WEBSITE_BOX_EXAMPLE.description}
-            </p>
-            <p className="mt-4 text-sm font-semibold text-mid">
-              {WEBSITE_BOX_EXAMPLE.pricing}
-            </p>
+          <div className="mt-16">
+            <BoxCategories />
+
+            <div className="mt-6 border border-blue bg-paper p-8 md:p-10">
+              <span className="text-xs font-semibold uppercase tracking-widest text-blue">
+                Example — Website Box
+              </span>
+              <p className="mt-4 max-w-2xl text-lg leading-relaxed">
+                {WEBSITE_BOX_EXAMPLE.description}
+              </p>
+              <p className="mt-4 text-sm font-semibold text-mid">
+                {WEBSITE_BOX_EXAMPLE.pricing}
+              </p>
+            </div>
           </div>
         </Container>
       </section>
