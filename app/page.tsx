@@ -2,7 +2,7 @@ import Link from "next/link";
 import Container from "@/components/Container";
 import Button from "@/components/Button";
 import Reveal from "@/components/Reveal";
-import BiabSystemCard from "@/components/visuals/BiabSystemCard";
+import BIABSystem from "@/components/visuals/BIABSystem";
 import ProcessFlow from "@/components/visuals/ProcessFlow";
 import ProductDashboard from "@/components/visuals/ProductDashboard";
 import ChaosVsClean from "@/components/visuals/ChaosVsClean";
@@ -48,8 +48,8 @@ export default function Home() {
             </p>
           </div>
 
-          <Reveal className="mx-auto min-w-0 md:mx-0 md:ml-auto">
-            <BiabSystemCard />
+          <Reveal className="min-w-0">
+            <BIABSystem />
           </Reveal>
         </Container>
       </section>
