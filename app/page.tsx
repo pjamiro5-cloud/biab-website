@@ -18,7 +18,7 @@ export default function Home() {
     <>
       {/* Hero — tall scroll stage so the box can pack itself as the user scrolls */}
       <section
-        className="relative overflow-x-clip"
+        className="relative"
         data-biab-scroll-stage
         style={{ minHeight: "calc(100vh + 650px)" }}
       >

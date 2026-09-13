@@ -49,8 +49,12 @@ export default function BIABSystem({ modules = defaultModules, clientName = 'Ale
         card.style.setProperty('--pack-y', `${eased * travel}px`);
         card.style.setProperty('--pack-scale', `${1 - eased * .07}`);
         card.style.opacity = `${1 - Math.max(0, (t - .88) / .12)}`;
-        card.style.pointerEvents = t > .88 ? 'none' : '';
-        card.inert = t > .88;
+        const packed = t > .88;
+        card.style.pointerEvents = packed ? 'none' : '';
+        // Only touch `inert` when it actually changes — it forces
+        // accessibility-tree and hit-testing work, which adds up when
+        // called every animation frame during fast (trackpad) scrolling.
+        if (card.inert !== packed) card.inert = packed;
       });
     };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(render); };
