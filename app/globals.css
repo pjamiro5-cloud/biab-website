@@ -193,3 +193,15 @@ body {
     opacity: 1 !important;
   }
 }
+
+/* A bounded pause for the box animation, only where the full hero fits.
+   Native wheel/trackpad momentum remains untouched. */
+@media (min-width: 1024px) and (min-height: 800px) and (prefers-reduced-motion: no-preference) {
+  .biab-hero-stage {
+    min-height: calc(100svh + 420px);
+  }
+  .biab-hero-content {
+    position: sticky;
+    top: 5rem;
+  }
+}

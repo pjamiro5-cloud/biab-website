@@ -16,12 +16,12 @@ import {
 export default function Home() {
   return (
     <>
-      {/* The hero stays in normal document flow; only the cards animate on scroll. */}
+      {/* A short desktop hold gives the box time to pack without intercepting scrolling. */}
       <section
-        className="relative"
+        className="relative biab-hero-stage"
         data-biab-scroll-stage
       >
-        <div className="flex min-h-[calc(100svh-4rem)] items-center md:min-h-[calc(100svh-5rem)]">
+        <div className="biab-hero-content flex min-h-[calc(100svh-4rem)] items-center md:min-h-[calc(100svh-5rem)]">
           <div className="mx-auto w-full max-w-[1600px] px-6 py-8 md:px-10 md:py-10 lg:flex lg:items-center lg:gap-12 xl:gap-20">
             <div className="lg:w-[420px] lg:shrink-0 xl:w-[460px]">
               <h1 className="font-display text-[56px] font-bold leading-[0.98] tracking-tight md:text-[84px] lg:text-[64px] xl:text-[76px]">
@@ -54,7 +54,7 @@ export default function Home() {
 
             <div className="mt-16 min-w-0 lg:mt-0 lg:flex-1">
               <Reveal>
-                <BIABSystem />
+                <BIABSystem scrollDistance={420} />
               </Reveal>
               <p className="mt-6 text-center text-xs font-semibold uppercase tracking-widest text-mid">
                 Scroll to pack your box{" "}
