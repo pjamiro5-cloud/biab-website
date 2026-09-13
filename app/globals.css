@@ -46,7 +46,8 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Leave document scrolling to the browser, including trackpad momentum. */
+  scroll-behavior: auto;
 }
 
 body {

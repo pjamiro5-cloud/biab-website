@@ -37,20 +37,26 @@ export default function BIABSystem({ modules = defaultModules, clientName = 'Ale
     let frame = 0;
     let start = 0;
     let height = 0;
+    let lastProgress = -1;
     const render = () => {
       frame = 0;
       const progress = media.matches ? 0 : Math.max(0, Math.min(1, (window.scrollY - start) / Math.max(1, scrollDistance)));
+      // Once packed (or when reduced motion is enabled), further page scrolling
+      // must not keep invalidating the cards' styles and hit-testing state.
+      if (progress === lastProgress) return;
+      lastProgress = progress;
       cards.forEach((card, i) => {
         // The front card enters first; the remaining cards follow into the opening.
         const delay = (cards.length - 1 - i) * 0.045;
         const t = Math.max(0, Math.min(1, (progress - delay) / (1 - delay)));
         const eased = t * t * (3 - 2 * t);
         const travel = Math.max(0, .70 - i * .1248) * height;
-        card.style.setProperty('--pack-y', `${eased * travel}px`);
-        card.style.setProperty('--pack-scale', `${1 - eased * .07}`);
+        card.style.transform = `translateY(${eased * travel}px) rotate(7deg) scale(${1 - eased * .07})`;
         card.style.opacity = `${1 - Math.max(0, (t - .88) / .12)}`;
         const packed = t > .88;
-        card.style.pointerEvents = packed ? 'none' : '';
+        if (card.style.pointerEvents !== (packed ? 'none' : '')) {
+          card.style.pointerEvents = packed ? 'none' : '';
+        }
         // Only touch `inert` when it actually changes — it forces
         // accessibility-tree and hit-testing work, which adds up when
         // called every animation frame during fast (trackpad) scrolling.
@@ -61,6 +67,7 @@ export default function BIABSystem({ modules = defaultModules, clientName = 'Ale
     const measure = () => {
       start = anchor.getBoundingClientRect().top + window.scrollY;
       height = box.getBoundingClientRect().height;
+      lastProgress = -1;
       schedule();
     };
     const observer = new ResizeObserver(measure);
@@ -76,8 +83,7 @@ export default function BIABSystem({ modules = defaultModules, clientName = 'Ale
       window.removeEventListener('resize', measure);
       media.removeEventListener('change', schedule);
       cards.forEach(card => {
-        card.style.removeProperty('--pack-y');
-        card.style.removeProperty('--pack-scale');
+        card.style.transform = '';
         card.style.opacity = '';
         card.style.pointerEvents = '';
         card.inert = false;

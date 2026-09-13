@@ -16,13 +16,12 @@ import {
 export default function Home() {
   return (
     <>
-      {/* Hero — tall scroll stage so the box can pack itself as the user scrolls */}
+      {/* The hero stays in normal document flow; only the cards animate on scroll. */}
       <section
         className="relative"
         data-biab-scroll-stage
-        style={{ minHeight: "calc(100vh + 650px)" }}
       >
-        <div className="sticky top-16 flex min-h-[calc(100vh-4rem)] items-center md:top-20 md:min-h-[calc(100vh-5rem)]">
+        <div className="flex min-h-[calc(100svh-4rem)] items-center md:min-h-[calc(100svh-5rem)]">
           <div className="mx-auto w-full max-w-[1600px] px-6 py-8 md:px-10 md:py-10 lg:flex lg:items-center lg:gap-12 xl:gap-20">
             <div className="lg:w-[420px] lg:shrink-0 xl:w-[460px]">
               <h1 className="font-display text-[56px] font-bold leading-[0.98] tracking-tight md:text-[84px] lg:text-[64px] xl:text-[76px]">
