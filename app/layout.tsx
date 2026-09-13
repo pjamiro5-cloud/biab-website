@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Space_Grotesk, Inter, Oswald } from "next/font/google";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -54,7 +53,6 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${inter.variable} ${oswald.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-paper text-ink">
-        <SmoothScroll />
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />
