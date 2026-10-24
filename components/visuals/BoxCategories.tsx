@@ -1,23 +1,24 @@
+import { T } from "@/components/i18n/LocaleProvider";
 const CATEGORIES = [
-  { label: "Websites", color: "bg-box-websites" },
-  { label: "SEO", color: "bg-box-seo" },
-  { label: "Content", color: "bg-box-content" },
-  { label: "AI Automation", color: "bg-box-ai" },
-  { label: "Recruiting", color: "bg-box-recruiting" },
+  { label: "AI Automation Systems", color: "bg-box-ai", available: true },
 ];
 
 export default function BoxCategories() {
   return (
-    <div className="flex flex-wrap gap-3">
+    <ul className="flex flex-wrap gap-2.5" aria-label="Business Boxes">
       {CATEGORIES.map((cat) => (
-        <span
+        <li
           key={cat.label}
-          className="inline-flex items-center gap-2 border border-line px-3 py-1.5 text-xs font-semibold text-ink"
+          className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold ${
+            cat.available ? "border-ink text-ink" : "border-line text-mid"
+          }`}
         >
-          <span className={`h-2.5 w-2.5 shrink-0 ${cat.color}`} aria-hidden="true" />
-          {cat.label}
-        </span>
+          <T>{cat.label}</T>
+          <span className={cat.available ? "text-blue" : "text-mid"}>
+            <T>{cat.available ? "Available" : "Later"}</T>
+          </span>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }

@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Locale redirects preserve the incoming origin, including local preview addresses.
+  skipMiddlewareUrlNormalize: true,
 };
 
 export default nextConfig;

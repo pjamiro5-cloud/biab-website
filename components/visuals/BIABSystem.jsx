@@ -1,5 +1,8 @@
 "use client";
 
+import { T, useTranslation } from "@/components/i18n/LocaleProvider";
+
+
 import React, { useEffect, useId, useRef, useState } from "react";
 import "./biab-system.css";
 
@@ -19,11 +22,12 @@ function Icon({ type, ...props }) {
     templates: <><path d="M3 8V5h7l3 3h8v3M3 8v13h16l3-10H8l-5 10"/></>,
     support: <><path d="M4 3h16v14h-8l-5 5v-5H4z"/><path d="M8 9h.01M12 9h.01M16 9h.01"/></>,
   };
-  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}>{paths[type]}</svg>;
+  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" {...props}><T>{paths[type]}</T></svg>;
 }
 
 /** Standalone, container-responsive component. All values are illustrative and editable. */
 export default function BIABSystem({ modules = defaultModules, clientName = 'Alex Morgan', clientValue = 'CHF 2’400', brand = 'BIAB', logoSrc = '/biab-wordmark.png', showDetails = false, scrollAnimation = true, scrollDistance = 600, className = '', onModuleChange = () => {} }) {
+  const t = useTranslation();
   const [selected, setSelected] = useState(modules[0]?.id);
   const uid = useId();
   const sceneRef = useRef(null);
@@ -91,33 +95,33 @@ export default function BIABSystem({ modules = defaultModules, clientName = 'Ale
     };
   }, [scrollAnimation, scrollDistance, modules]);
   const active = modules.find(m => m.id === selected) || modules[0];
-  return <section ref={sceneRef} className={`biab-system ${className}`} aria-label="The BIAB business system">
+  return <section ref={sceneRef} className={`biab-system ${className}`} aria-label={t("The BIAB business system")}>
     <div className="biab-scene">
-      <div className="biab-note" aria-hidden="true">Everything you need.<br/><span>In one place.</span><svg viewBox="0 0 80 60"><path d="M6 4C4 34 34 43 65 43m-10-8 12 8-13 8"/></svg></div>
+      <div className="biab-note" aria-hidden="true"><T>Everything you need.</T><br/><span><T>In one place.</T></span><svg viewBox="0 0 80 60"><path d="M6 4C4 34 34 43 65 43m-10-8 12 8-13 8"/></svg></div>
       <div className="biab-box">
         <div className="biab-box-back" aria-hidden="true"/>
-        <div className="biab-module-stack" aria-label="Explore the five modules">
+        <div className="biab-module-stack" aria-label={t("Explore the five modules")}>
           {modules.map((module, i) => <button key={module.id} className="biab-module" style={{ '--i': i }} aria-pressed={active?.id === module.id} aria-controls={`${uid}-detail`} onClick={() => { setSelected(module.id); onModuleChange?.(module); }}>
-            <span className="biab-module-icon"><Icon type={module.id}/></span><span>{module.label}</span><span className="biab-module-arrow" aria-hidden="true">↗</span>
+            <span className="biab-module-icon"><Icon type={module.id}/></span><span><T>{module.label}</T></span><span className="biab-module-arrow" aria-hidden="true">↗</span>
           </button>)}
         </div>
         <div className="biab-box-left" aria-hidden="true"/>
-        <div className="biab-box-front"><div className="biab-box-brand"><span className="biab-logo-crop"><img className="biab-box-logo" src={logoSrc} alt={brand}/></span><span className="biab-box-caption">BUSINESS<br/>IN A BOX</span></div><span className="biab-box-mark" aria-hidden="true">↗</span></div>
+        <div className="biab-box-front"><div className="biab-box-brand"><span className="biab-logo-crop"><img className="biab-box-logo" src={logoSrc} alt={brand}/></span><span className="biab-box-caption"><T>BUSINESS</T><br/><T>IN A BOX</T></span></div><span className="biab-box-mark" aria-hidden="true">↗</span></div>
       </div>
       <div className="biab-results">
         <div className="biab-chart-card">
-          <div className="biab-card-kicker"><span className="biab-dot"/> YOUR PROGRESS <span>↗</span></div>
-          <h3>From opportunity<br/>to client.</h3>
-          <div className="biab-chart" role="img" aria-label="Illustrative upward progress chart">
+          <div className="biab-card-kicker"><span className="biab-dot"/><T> YOUR PROGRESS </T><span>↗</span></div>
+          <h3><T>From opportunity</T><br/><T>to client.</T></h3>
+          <div className="biab-chart" role="img" aria-label={t("Illustrative upward progress chart")}>
             {[12,19,26,38,31,45,58,50,68,85].map((height,i)=><span key={i} style={{'--bar-height':`${height}%`}}/>)}
           </div>
-          <div className="biab-chart-footer"><span>Opportunity</span><span>Client</span></div>
+          <div className="biab-chart-footer"><span><T>Opportunity</T></span><span><T>Client</T></span></div>
         </div>
         <svg className="biab-connector" viewBox="0 0 160 110" fill="none" aria-hidden="true"><path d="M5 8C92 8 58 92 145 92m-12-11 13 11-13 10"/></svg>
-        <div className="biab-client-card"><span className="biab-check" aria-hidden="true">✓</span><span className="biab-client-status">CLIENT WON</span><h3>{clientName}</h3><span className="biab-client-value">{clientValue}</span><div className="biab-client-footer"><span>Client</span><span aria-hidden="true">•••</span></div></div>
-        <div className="biab-manifesto" aria-hidden="true">IDEAS.<br/>TOOLS.<br/>OPPORTUNITIES.<br/><b>REAL BUSINESSES.</b></div>
+        <div className="biab-client-card"><span className="biab-check" aria-hidden="true">✓</span><span className="biab-client-status"><T>CLIENT WON</T></span><h3><T>{clientName}</T></h3><span className="biab-client-value"><T>{clientValue}</T></span><div className="biab-client-footer"><span><T>Client</T></span><span aria-hidden="true">•••</span></div></div>
+        <div className="biab-manifesto" aria-hidden="true"><T>IDEAS.</T><br/><T>TOOLS.</T><br/><T>OPPORTUNITIES.</T><br/><b><T>REAL BUSINESSES.</T></b></div>
       </div>
     </div>
-    {active && <div className={`biab-detail ${showDetails ? '' : 'biab-sr-only'}`} id={`${uid}-detail`} aria-live="polite"><span className="biab-detail-index">0{modules.indexOf(active)+1} / 0{modules.length}</span><div><span className="biab-detail-eyebrow">{active.eyebrow}</span><p>{active.description}</p></div><span className="biab-detail-label">{active.label} <span aria-hidden="true">↗</span></span></div>}
+    {active && <div className={`biab-detail ${showDetails ? '' : 'biab-sr-only'}`} id={`${uid}-detail`} aria-live="polite"><span className="biab-detail-index">0<T>{modules.indexOf(active)+1}</T> / 0<T>{modules.length}</T></span><div><span className="biab-detail-eyebrow"><T>{active.eyebrow}</T></span><p><T>{active.description}</T></p></div><span className="biab-detail-label"><T>{active.label}</T> <span aria-hidden="true">↗</span></span></div>}
   </section>;
 }

@@ -205,3 +205,103 @@ body {
     top: 5rem;
   }
 }
+
+/* ───────────────────────── Liquid glass ─────────────────────────
+   Glass only reads as glass when there is colour behind it, so it is
+   used on top of the blue "stage" panels and soft hero glows — never
+   stacked glass-on-glass on plain white. */
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.66);
+  --glass-bg-strong: rgba(255, 255, 255, 0.82);
+  --glass-edge: rgba(255, 255, 255, 0.8);
+  --glass-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 0 0 1px rgba(10, 10, 10, 0.05),
+    0 30px 60px -30px rgba(20, 34, 90, 0.35);
+}
+
+.glass,
+.glass-strong {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  backdrop-filter: blur(22px) saturate(180%);
+  border: 1px solid var(--glass-edge);
+  box-shadow: var(--glass-shadow);
+}
+
+.glass-strong {
+  background: var(--glass-bg-strong);
+}
+
+/* Soft light behind the hero headline. */
+.hero-glow {
+  background:
+    radial-gradient(55% 60% at 50% 0%, rgba(61, 90, 254, 0.16), transparent 70%),
+    radial-gradient(35% 45% at 88% 20%, rgba(34, 211, 238, 0.12), transparent 70%),
+    radial-gradient(35% 45% at 10% 30%, rgba(167, 139, 250, 0.12), transparent 70%),
+    var(--color-paper);
+}
+
+/* The coloured panel glass sits on — the brand blue, lit from above. */
+.glass-stage {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(70% 55% at 50% 0%, rgba(255, 255, 255, 0.45), transparent 70%),
+    radial-gradient(40% 50% at 100% 100%, rgba(34, 211, 238, 0.45), transparent 70%),
+    radial-gradient(45% 55% at 0% 80%, rgba(167, 139, 250, 0.5), transparent 70%),
+    linear-gradient(180deg, #5b74ff 0%, #3d5afe 55%, #2f47d9 100%);
+}
+
+/* A faint grid gives the glass something to refract. */
+.glass-stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.09) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(80% 70% at 50% 40%, #000 30%, transparent 85%);
+  pointer-events: none;
+}
+
+.glass-stage > * {
+  position: relative;
+}
+
+/* Phones: lighter blur — cheaper to render while scrolling, same look. */
+@media (max-width: 640px) {
+  .glass,
+  .glass-strong {
+    -webkit-backdrop-filter: blur(14px) saturate(170%);
+    backdrop-filter: blur(14px) saturate(170%);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass,
+  .glass-strong {
+    background: var(--color-paper);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .glass,
+  .glass-strong {
+    background: var(--color-paper);
+    border-color: var(--color-ink);
+  }
+}
+
+/* Long translated headings must fit narrow phones as well as desktop. */
+main :is(h1, h2, h3) {
+  overflow-wrap: anywhere;
+  hyphens: auto;
+}
+@media (max-width: 360px) {
+  main h1 { font-size: 36px; }
+}
+/* Keep headline words intact where possible; overflow-wrap handles exceptional long words. */
+main h1 { hyphens: none; }

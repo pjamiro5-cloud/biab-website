@@ -1,3 +1,6 @@
+import { T } from "@/components/i18n/LocaleProvider";
+import type { CSSProperties } from "react";
+
 function YouTubeIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="#FF0000" aria-hidden="true">
@@ -71,19 +74,41 @@ function WhatsAppIcon() {
 }
 
 const CHAOS_TAGS = [
-  { icon: YouTubeIcon, label: "YouTube tutorials", rotate: -9, x: "0%", y: "0%", shadow: "2px 2px" },
-  { icon: NotionIcon, label: "Random Notion doc", rotate: 6, x: "34%", y: "-2%", shadow: "-2px 2px" },
-  { icon: GmailIcon, label: "47 unread emails", rotate: -4, x: "62%", y: "4%", shadow: "2px 3px" },
-  { icon: DocsIcon, label: "sales_script_v3_FINAL", rotate: 8, x: "4%", y: "16%", shadow: "2px 2px" },
-  { icon: GoogleIcon, label: "“how to find leads”", rotate: -11, x: "36%", y: "20%", shadow: "-2px 3px" },
-  { icon: TrelloIcon, label: "Untitled board (12)", rotate: 5, x: "60%", y: "27%", shadow: "2px 2px" },
-  { icon: SheetsIcon, label: "old-crm-template", rotate: -6, x: "0%", y: "37%", shadow: "3px 2px" },
-  { icon: ChromeIcon, label: "17 tabs open", rotate: 10, x: "28%", y: "43%", shadow: "-2px 2px" },
-  { icon: WhatsAppIcon, label: "send the contract?", rotate: -3, x: "50%", y: "49%", shadow: "2px 2px" },
-  { icon: NotionIcon, label: "Copy of Copy of Notes", rotate: 9, x: "2%", y: "60%", shadow: "2px 3px" },
-  { icon: YouTubeIcon, label: "how much to charge?", rotate: -7, x: "32%", y: "67%", shadow: "-2px 2px" },
-  { icon: ChromeIcon, label: "r/entrepreneur", rotate: 6, x: "58%", y: "72%", shadow: "2px 2px" },
+  { icon: YouTubeIcon, label: "YouTube tutorials" },
+  { icon: NotionIcon, label: "Random Notion doc" },
+  { icon: GmailIcon, label: "47 unread emails" },
+  { icon: DocsIcon, label: "sales_script_v3_FINAL" },
+  { icon: GoogleIcon, label: "“how to find leads”" },
+  { icon: TrelloIcon, label: "Untitled board (12)" },
+  { icon: SheetsIcon, label: "old-crm-template" },
+  { icon: ChromeIcon, label: "17 tabs open" },
+  { icon: WhatsAppIcon, label: "send the contract?" },
+  { icon: NotionIcon, label: "Copy of Copy of Notes" },
+  { icon: YouTubeIcon, label: "how much to charge?" },
+  { icon: ChromeIcon, label: "r/entrepreneur" },
+  { icon: DocsIcon, label: "proposal_FINAL_v7" },
+  { icon: GmailIcon, label: "forgot to follow up" },
+  { icon: SheetsIcon, label: "leads_backup_OLD" },
+  { icon: GoogleIcon, label: "“which CRM is best?”" },
+  { icon: WhatsAppIcon, label: "where’s the login?" },
+  { icon: TrelloIcon, label: "23 overdue tasks" },
+  { icon: NotionIcon, label: "ideas for later (89)" },
+  { icon: YouTubeIcon, label: "another 2-hour course" },
+  { icon: DocsIcon, label: "pricing_draft_v4" },
+  { icon: ChromeIcon, label: "session restored (32)" },
+  { icon: SheetsIcon, label: "client-list-copy-2" },
+  { icon: GmailIcon, label: "Re: Re: quick question" },
+  { icon: WhatsAppIcon, label: "did we send this?" },
+  { icon: GoogleIcon, label: "“how to start?”" },
+  { icon: TrelloIcon, label: "To do: organise this" },
 ];
+
+// Deterministic scattered positions: no random server/browser mismatch.
+// Separate layouts keep the labels within a padded frame at both widths.
+const ROTATIONS = [-13, 9, -6, 12, -11, 5, -8, 15, -4];
+const X_OFFSETS = [0, 30, 61, 5, 37, 58, 1, 26, 65];
+const MOBILE_X = [1, 38, 6, 43, 0, 33];
+const Y_JITTER = [0, 2, -1, 1, -2, 0];
 
 const CLEAN_ROWS = ["Leads", "CRM", "Templates", "Support"];
 
@@ -91,46 +116,52 @@ export default function ChaosVsClean() {
   return (
     <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-8">
       <div>
-        <span className="text-xs font-semibold uppercase tracking-widest text-mid">
+        <span className="text-xs font-semibold uppercase tracking-widest text-mid"><T>
           Without BIAB
-        </span>
-        <div className="relative mt-4 h-[26rem] border border-line bg-tint">
+        </T></span>
+        <div className="relative mt-4 h-[26rem] overflow-hidden rounded-[28px] border border-line bg-paper">
+          <div className="absolute inset-x-5 bottom-6 top-6">
           {CHAOS_TAGS.map((tag, i) => {
             const Icon = tag.icon;
             return (
               <span
                 key={`${tag.label}-${i}`}
-                className="absolute inline-flex max-w-[85%] items-center gap-2 whitespace-nowrap border border-line bg-paper px-3 py-1.5 text-xs font-medium text-mid"
+                className="absolute left-[var(--tag-mobile-x)] top-[var(--tag-mobile-y)] inline-flex max-w-[calc(100%-var(--tag-mobile-x))] items-center gap-2 whitespace-nowrap rounded-full border border-line bg-paper px-3 py-1.5 text-xs font-medium text-mid md:left-[var(--tag-x)] md:top-[var(--tag-y)] md:max-w-[calc(100%-var(--tag-x))]"
                 style={{
-                  left: tag.x,
-                  top: tag.y,
-                  transform: `rotate(${tag.rotate}deg)`,
-                  boxShadow: `${tag.shadow} 0 0 var(--color-line)`,
-                }}
+                  "--tag-x": `${X_OFFSETS[i % X_OFFSETS.length]}%`,
+                  "--tag-y": `${Math.floor(i / 3) * 10.3 + 1 + Y_JITTER[i % Y_JITTER.length]}%`,
+                  "--tag-mobile-x": `${MOBILE_X[i % MOBILE_X.length]}%`,
+                  "--tag-mobile-y": `${Math.floor(i / 2) * 6.8 + 1 + Y_JITTER[i % Y_JITTER.length] * 0.5}%`,
+                  transform: `rotate(${ROTATIONS[i % ROTATIONS.length]}deg)`,
+                  boxShadow: `${i % 2 ? "-2px 3px" : "3px 2px"} 0 0 var(--color-line)`,
+                } as CSSProperties}
               >
-                <Icon />
-                {tag.label}
+                <span className="shrink-0">
+                  <Icon />
+                </span>
+                <span className="min-w-0 truncate"><T>{tag.label}</T></span>
               </span>
             );
           })}
+          </div>
         </div>
       </div>
 
       <div>
-        <span className="text-xs font-semibold uppercase tracking-widest text-blue">
+        <span className="text-xs font-semibold uppercase tracking-widest text-blue"><T>
           With BIAB
-        </span>
-        <div className="mt-4 h-[26rem] border border-blue bg-blue-tint p-6">
-          <span className="font-display text-sm font-bold tracking-tight">
+        </T></span>
+        <div className="glass-stage mt-4 h-[26rem] rounded-[28px] p-6">
+          <span className="font-display text-sm font-bold tracking-tight text-paper"><T>
             BIAB Workspace
-          </span>
+          </T></span>
           <div className="mt-4 space-y-2">
             {CLEAN_ROWS.map((row) => (
               <div
                 key={row}
-                className="flex items-center justify-between border border-blue-line bg-paper px-3 py-2.5 text-sm font-semibold"
+                className="glass-strong flex items-center justify-between rounded-2xl px-4 py-3 text-sm font-semibold"
               >
-                <span>{row}</span>
+                <span><T>{row}</T></span>
                 <svg
                   width="14"
                   height="14"

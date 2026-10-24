@@ -1,3 +1,4 @@
+import { translate, type Messages } from "./i18n/translate";
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
@@ -23,34 +24,34 @@ function readSlugs(): string[] {
     .map((file) => file.replace(/\.md$/, ""));
 }
 
-export function getAllPosts(): PostMeta[] {
+export function getAllPosts(messages: Messages = {}): PostMeta[] {
   return readSlugs()
     .map((slug) => {
       const raw = fs.readFileSync(path.join(POSTS_DIR, `${slug}.md`), "utf8");
       const { data } = matter(raw);
       return {
         slug,
-        title: data.title as string,
+        title: translate(messages, data.title as string),
         date: data.date as string,
-        excerpt: data.excerpt as string,
+        excerpt: translate(messages, data.excerpt as string),
       };
     })
     .sort((a, b) => (a.date < b.date ? 1 : -1));
 }
 
-export function getPostBySlug(slug: string): Post | null {
+export function getPostBySlug(slug: string, messages: Messages = {}): Post | null {
   const filePath = path.join(POSTS_DIR, `${slug}.md`);
   if (!fs.existsSync(filePath)) return null;
 
   const raw = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(raw);
-  const html = marked.parse(content, { async: false }) as string;
+  const html = marked.parse(content.trim().split(/\n\s*\n/).map(block => translate(messages, block)).join("\n\n"), { async: false }) as string;
 
   return {
     slug,
-    title: data.title as string,
+    title: translate(messages, data.title as string),
     date: data.date as string,
-    excerpt: data.excerpt as string,
+    excerpt: translate(messages, data.excerpt as string),
     html,
   };
 }
